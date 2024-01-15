@@ -4,19 +4,24 @@ using UnityEngine;
 using UnityEngine.XR.ARFoundation;
 using UnityEngine.XR.ARSubsystems;
 using System;
+using UnityEngine.UI;
 
 public class ARToTapObject : MonoBehaviour
 {
-    public GameObject placementIndicator;
+	public GameObject placementIndicator;
     public List<GameObject> _objectPrefab;
 
     [SerializeField] private Transform _objPreviewTransform;
+
+    [Header("Button UI")]
+    [SerializeField] private GameObject _panelButton;
+    [SerializeField] private GameObject _objPrevBtnPrefab;
     public ARRaycastManager arOrigin;
     private Pose placementPose;
     private bool placementPoseIsValid;
     private int objectNumber = 0;
 
-    void Start()
+	void Start()
     {
         objectNumber = 0;
     }
@@ -24,8 +29,32 @@ public class ARToTapObject : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //UpdatePreviewObject();
         UpdatePlacementPose();
         UpdatePlacementIndicator();
+    }
+
+    public void UpdatePreviewObject()
+    {
+        if (_panelButton.transform.childCount < _objectPrefab.Count)
+        {
+            foreach (Transform obj in _panelButton.transform)
+            {
+                Destroy(obj);
+            }
+
+            for (int i = 0; i < _objectPrefab.Count; i++)
+            {
+				GameObject prevButton = Instantiate(_objPrevBtnPrefab, _panelButton.transform).gameObject;
+
+				PreviewImagePrefab comp = prevButton.GetComponent<PreviewImagePrefab>();
+
+                comp.PreviewImage(_objectPrefab[i]);
+
+                prevButton.GetComponent<Button>().onClick.RemoveAllListeners();
+                prevButton.GetComponent<Button>().onClick.AddListener(() => ObjectPreview(i));
+			}
+		}
     }
 
     public void PlaceObject()
