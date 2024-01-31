@@ -5,6 +5,7 @@ using UnityEngine.XR.ARFoundation;
 using UnityEngine.XR.ARSubsystems;
 using System;
 using UnityEngine.UI;
+using UnityEditor.IMGUI.Controls;
 
 public class ARToTapObject : MonoBehaviour
 {
@@ -29,7 +30,7 @@ public class ARToTapObject : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //UpdatePreviewObject();
+        UpdatePreviewObject();
         UpdatePlacementPose();
         UpdatePlacementIndicator();
     }
@@ -47,12 +48,12 @@ public class ARToTapObject : MonoBehaviour
             {
 				GameObject prevButton = Instantiate(_objPrevBtnPrefab, _panelButton.transform).gameObject;
 
+                prevButton.GetComponent<Button>().onClick.RemoveAllListeners();
+                prevButton.GetComponent<Button>().onClick.AddListener(() => { ObjectPreview(i); });
+
 				PreviewImagePrefab comp = prevButton.GetComponent<PreviewImagePrefab>();
 
                 comp.PreviewImage(_objectPrefab[i]);
-
-                prevButton.GetComponent<Button>().onClick.RemoveAllListeners();
-                prevButton.GetComponent<Button>().onClick.AddListener(() => ObjectPreview(i));
 			}
 		}
     }
@@ -69,6 +70,7 @@ public class ARToTapObject : MonoBehaviour
     {
         objectNumber = preview;
         ClearObjectPreview();
+        Debug.Log("Set preview index " + preview);
         GameObject loadObject = Instantiate(_objectPrefab[preview], placementPose.position, placementPose.rotation).gameObject;
         loadObject.transform.SetParent(_objPreviewTransform);
     }
