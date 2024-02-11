@@ -5,7 +5,6 @@ using UnityEngine.XR.ARFoundation;
 using UnityEngine.XR.ARSubsystems;
 using System;
 using UnityEngine.UI;
-using UnityEditor.IMGUI.Controls;
 
 public class ARToTapObject : MonoBehaviour
 {
@@ -27,8 +26,11 @@ public class ARToTapObject : MonoBehaviour
         objectNumber = 0;
     }
 
-    // Update is called once per frame
-    void Update()
+    public Pose PlacementPose { get => placementPose; set => placementPose = value; }
+	public Transform PreviewTf { get => _objPreviewTransform; set => _objPreviewTransform = value; }
+
+	// Update is called once per frame
+	void Update()
     {
         UpdatePreviewObject();
         UpdatePlacementPose();
@@ -48,8 +50,11 @@ public class ARToTapObject : MonoBehaviour
             {
 				GameObject prevButton = Instantiate(_objPrevBtnPrefab, _panelButton.transform).gameObject;
 
+                prevButton.name = _objectPrefab[i].name;
+
+                prevButton.GetComponent<PreviewImagePrefab>().setIndexPrev(i);
                 prevButton.GetComponent<Button>().onClick.RemoveAllListeners();
-                prevButton.GetComponent<Button>().onClick.AddListener(() => { ObjectPreview(i); });
+                prevButton.GetComponent<Button>().onClick.AddListener(() => { prevButton.GetComponent<PreviewImagePrefab>().ObjectPreview(); });
 
 				PreviewImagePrefab comp = prevButton.GetComponent<PreviewImagePrefab>();
 
@@ -64,15 +69,6 @@ public class ARToTapObject : MonoBehaviour
         GameObject loadObject = Instantiate(selectedObject, placementPose.position, placementPose.rotation).gameObject;
         loadObject.transform.SetParent(_objPreviewTransform);
         loadObject.transform.parent = null;
-    }
-
-    public void ObjectPreview(int preview)
-    {
-        objectNumber = preview;
-        ClearObjectPreview();
-        Debug.Log("Set preview index " + preview);
-        GameObject loadObject = Instantiate(_objectPrefab[preview], placementPose.position, placementPose.rotation).gameObject;
-        loadObject.transform.SetParent(_objPreviewTransform);
     }
 
     public void ClearObjectPreview()
