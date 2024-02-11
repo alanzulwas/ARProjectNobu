@@ -10,8 +10,10 @@ public class ARToTapObject : MonoBehaviour
 {
 	public GameObject placementIndicator;
     public List<GameObject> _objectPrefab;
+	public GameObject _previewedObject;
 
-    [SerializeField] private Transform _objPreviewTransform;
+	[SerializeField] private Transform _objPreviewTransform;
+    [SerializeField] private Transform _objPreviewHoldTransform;
 
     [Header("Button UI")]
     [SerializeField] private GameObject _panelButton;
@@ -28,13 +30,15 @@ public class ARToTapObject : MonoBehaviour
 
     public Pose PlacementPose { get => placementPose; set => placementPose = value; }
 	public Transform PreviewTf { get => _objPreviewTransform; set => _objPreviewTransform = value; }
-
+	public Transform PreviewTfHold { get => _objPreviewHoldTransform; set => _objPreviewHoldTransform = value; }
+    public int ObjectNumber { get => objectNumber; set => objectNumber = value; }
+	
 	// Update is called once per frame
 	void Update()
     {
         UpdatePreviewObject();
-        UpdatePlacementPose();
-        UpdatePlacementIndicator();
+        //UpdatePlacementPose();
+        //UpdatePlacementIndicator();
     }
 
     public void UpdatePreviewObject()
@@ -65,52 +69,73 @@ public class ARToTapObject : MonoBehaviour
 
     public void PlaceObject()
     {
-        GameObject selectedObject = _objectPrefab[objectNumber];
-        GameObject loadObject = Instantiate(selectedObject, placementPose.position, placementPose.rotation).gameObject;
-        loadObject.transform.SetParent(_objPreviewTransform);
-        loadObject.transform.parent = null;
+		if (_objPreviewHoldTransform.childCount == 0)
+        {
+            return;
+        }
+        _previewedObject.transform.parent = null;
+        RemoveAllComponent(_previewedObject);
+        _previewedObject = null;
+        //GameObject selectedObject = _objectPrefab[objectNumber];
+        //GameObject loadObject = Instantiate(selectedObject, placementPose.position, placementPose.rotation).gameObject;
+        //loadObject.transform.SetParent(_objPreviewHoldTransform);
+        //loadObject.transform.parent = null;
+        //loadObject
+    }
+
+    void RemoveAllComponent(GameObject loadObject)
+    {
+        foreach (var comp in loadObject.GetComponents<Component>())
+        {
+            if (!(comp is Transform) && !(comp is MeshFilter) && !(comp is MeshRenderer))
+            {
+                DestroyImmediate(comp);
+            }
+        }
     }
 
     public void ClearObjectPreview()
     {
         objectNumber = _objectPrefab.Count + 1;
-        for(var i = _objPreviewTransform.childCount - 1; i >= 0; i--)
+        for(var i = _objPreviewHoldTransform.childCount - 1; i >= 0; i--)
         {
-            Destroy(_objPreviewTransform.GetChild(i).gameObject);
+            Destroy(_objPreviewHoldTransform.GetChild(i).gameObject);
         }
     }
 
-    private void UpdatePlacementIndicator()
-    {
-        if (placementPoseIsValid)
-        {
-            placementIndicator.SetActive(true);
-            placementIndicator.transform.SetPositionAndRotation(placementPose.position, placementPose.rotation);
-        }
-        else
-        {
-            placementIndicator.SetActive(false);
-        }
-    }
+	#region ARFoundation
+	private void UpdatePlacementIndicator()
+	{
+		if (placementPoseIsValid)
+		{
+			placementIndicator.SetActive(true);
+			placementIndicator.transform.SetPositionAndRotation(placementPose.position, placementPose.rotation);
+		}
+		else
+		{
+			placementIndicator.SetActive(false);
+		}
+	}
 
-    public void UpdatePlacementPose()
-    {
-        var screenCenter = Camera.current.ViewportToScreenPoint(new Vector3(0.5f, 0.5f));
-        var hits = new List<ARRaycastHit>();
-        arOrigin.Raycast(screenCenter, hits, TrackableType.Planes);
+	public void UpdatePlacementPose()
+	{
+		var screenCenter = Camera.current.ViewportToScreenPoint(new Vector3(0.5f, 0.5f));
+		var hits = new List<ARRaycastHit>();
+		arOrigin.Raycast(screenCenter, hits, TrackableType.Planes);
 
-        placementPoseIsValid = hits.Count > 0;
-        if (placementPoseIsValid)
-        {
-            placementPose = hits[0].pose;
+		placementPoseIsValid = hits.Count > 0;
+		if (placementPoseIsValid)
+		{
+			placementPose = hits[0].pose;
 
-            var cameraForward = Camera.current.transform.forward;
-            var cameraBearing = new Vector3(cameraForward.x, 0, cameraForward.z).normalized;
-            placementPose.rotation = Quaternion.LookRotation(cameraBearing);
-        }
-    }
+			var cameraForward = Camera.current.transform.forward;
+			var cameraBearing = new Vector3(cameraForward.x, 0, cameraForward.z).normalized;
+			placementPose.rotation = Quaternion.LookRotation(cameraBearing);
+		}
+	}
+	#endregion
 
-    private static ARToTapObject _instance;
+	private static ARToTapObject _instance;
 
     public static ARToTapObject Instance
     {

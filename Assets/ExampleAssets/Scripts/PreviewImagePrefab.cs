@@ -7,9 +7,15 @@ public class PreviewImagePrefab : MonoBehaviour
 {
     public RawImage img;
     public int indexPrevButton;
+	//[SerializeField] private LeanDragTranslate
 
-    // Start is called before the first frame update
-    public void PreviewImage(GameObject obj)
+	// Start is called before the first frame update
+	private void Update()
+	{
+		Debug.Log("Position " + transform.position);
+	}
+
+	public void PreviewImage(GameObject obj)
     {
 		img.texture = RuntimePreviewGenerator.GenerateModelPreview(obj.transform);
 	}
@@ -23,8 +29,11 @@ public class PreviewImagePrefab : MonoBehaviour
 	{
 		ARToTapObject placem = ARToTapObject.Instance;
 		placem.ClearObjectPreview();
+		placem.ObjectNumber = indexPrevButton;
 		Debug.Log("Set preview index " + indexPrevButton);
-		GameObject loadObject = Instantiate(placem._objectPrefab[indexPrevButton], placem.PlacementPose.position, placem.PlacementPose.rotation).gameObject;
-		loadObject.transform.SetParent(placem.PreviewTf);
+		GameObject loadObject = Instantiate(placem._objectPrefab[indexPrevButton]).gameObject;
+		loadObject.transform.position = new Vector3(0f,0f,2f);
+		loadObject.transform.SetParent(placem.PreviewTfHold);
+		placem._previewedObject = loadObject;
 	}
 }
