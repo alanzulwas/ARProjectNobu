@@ -18,6 +18,7 @@ public class ARToTapObject : MonoBehaviour
     [Header("Button UI")]
     [SerializeField] private GameObject _panelButton;
     [SerializeField] private GameObject _objPrevBtnPrefab;
+    [SerializeField] private GameObject _objAddBtnPrefab;
     public ARRaycastManager arOrigin;
     private Pose placementPose;
     private bool placementPoseIsValid;
@@ -26,6 +27,7 @@ public class ARToTapObject : MonoBehaviour
 	void Start()
     {
         objectNumber = 0;
+        FillPreviewObject();
     }
 
     public Pose PlacementPose { get => placementPose; set => placementPose = value; }
@@ -43,29 +45,33 @@ public class ARToTapObject : MonoBehaviour
 
     public void UpdatePreviewObject()
     {
-        if (_panelButton.transform.childCount < _objectPrefab.Count)
+        if (_panelButton.transform.childCount != _objectPrefab.Count)
         {
             foreach (Transform obj in _panelButton.transform)
             {
-                Destroy(obj);
+                Destroy(obj.gameObject);
             }
-
-            for (int i = 0; i < _objectPrefab.Count; i++)
-            {
-				GameObject prevButton = Instantiate(_objPrevBtnPrefab, _panelButton.transform).gameObject;
-
-                prevButton.name = _objectPrefab[i].name;
-
-                prevButton.GetComponent<PreviewImagePrefab>().setIndexPrev(i);
-                prevButton.GetComponent<Button>().onClick.RemoveAllListeners();
-                prevButton.GetComponent<Button>().onClick.AddListener(() => { prevButton.GetComponent<PreviewImagePrefab>().ObjectPreview(); });
-
-				PreviewImagePrefab comp = prevButton.GetComponent<PreviewImagePrefab>();
-
-                comp.PreviewImage(_objectPrefab[i]);
-			}
+            FillPreviewObject();
 		}
     }
+
+    void FillPreviewObject()
+    {
+		for (int i = 0; i < _objectPrefab.Count; i++)
+		{
+			GameObject prevButton = Instantiate(_objPrevBtnPrefab, _panelButton.transform).gameObject;
+
+			prevButton.name = _objectPrefab[i].name;
+
+			prevButton.GetComponent<PreviewImagePrefab>().setIndexPrev(i);
+			prevButton.GetComponent<Button>().onClick.RemoveAllListeners();
+			prevButton.GetComponent<Button>().onClick.AddListener(() => { prevButton.GetComponent<PreviewImagePrefab>().ObjectPreview(); });
+
+			PreviewImagePrefab comp = prevButton.GetComponent<PreviewImagePrefab>();
+
+			comp.PreviewImage(_objectPrefab[i]);
+		}
+	}
 
     public void PlaceObject()
     {
@@ -76,11 +82,6 @@ public class ARToTapObject : MonoBehaviour
         _previewedObject.transform.parent = null;
         RemoveAllComponent(_previewedObject);
         _previewedObject = null;
-        //GameObject selectedObject = _objectPrefab[objectNumber];
-        //GameObject loadObject = Instantiate(selectedObject, placementPose.position, placementPose.rotation).gameObject;
-        //loadObject.transform.SetParent(_objPreviewHoldTransform);
-        //loadObject.transform.parent = null;
-        //loadObject
     }
 
     void RemoveAllComponent(GameObject loadObject)
