@@ -5,30 +5,64 @@ using UnityEngine.XR.ARFoundation;
 using UnityEngine.XR.ARSubsystems;
 using System;
 using UnityEngine.UI;
+using TMPro;
+using UnityEditor;
+using IngameDebugConsole;
+using System.IO;
+using Dummiesman;
 
 public class ARToTapObject : MonoBehaviour
 {
 	public GameObject placementIndicator;
     public List<GameObject> _objectPrefab;
 	public GameObject _previewedObject;
+    public GameObject _temporaryGameObject;
+    public Material _materialDefault;
+    public TextMeshProUGUI _countingCache;
+    public int angkaCacheSaved;
+    public List<string> DataPersistentStringValue; 
 
 	[SerializeField] private Transform _objPreviewTransform;
     [SerializeField] private Transform _objPreviewHoldTransform;
 
-    [Header("Button UI")]
+    [Header("UI")]
     [SerializeField] private GameObject _panelButton;
     [SerializeField] private GameObject _objPrevBtnPrefab;
     [SerializeField] private GameObject _objAddBtnPrefab;
     public ARRaycastManager arOrigin;
+
+    public Natipfilpick _importerLoader;
     private Pose placementPose;
     private bool placementPoseIsValid;
     private int objectNumber = 0;
 
+	private void Awake()
+	{
+		//if (!Directory.Exists(Application.persistentDataPath + "/Materials"))
+  //      {
+  //          Directory.CreateDirectory(Application.persistentDataPath + "/Materials");
+  //              //CreateFolder(Application.persistentDataPath, "Materials");
+		//}
+		//if (!File.Exists(Application.persistentDataPath + "/Materials/Testing.mat"))
+  //      {
+  //          File.Copy(Application.dataPath+"/Material/Testing.mat", Application.persistentDataPath + "/Materials/Testing.mat");
+  //      }	
+	}
+
 	void Start()
     {
         objectNumber = 0;
-        FillPreviewObject();
-    }
+
+        _importerLoader.StatusObjectCountText.SetActive(true);
+        _importerLoader.LoadingScreen.SetActive(false);
+
+        Debug.Log(Application.dataPath);
+		Debug.Log(Application.persistentDataPath);
+		Debug.Log(Application.temporaryCachePath);
+
+
+        UpdateObjectPrefab();
+	}
 
     public Pose PlacementPose { get => placementPose; set => placementPose = value; }
 	public Transform PreviewTf { get => _objPreviewTransform; set => _objPreviewTransform = value; }
@@ -38,22 +72,71 @@ public class ARToTapObject : MonoBehaviour
 	// Update is called once per frame
 	void Update()
     {
-        UpdatePreviewObject();
-        //UpdatePlacementPose();
-        //UpdatePlacementIndicator();
-    }
+        //UpdateObjectPrefab();
+        //UpdatePreviewObject();
+        UpdatePlacementPose();
+        UpdatePlacementIndicator();
+        //UpdateStatusObject();
+
+	}
 
     public void UpdatePreviewObject()
     {
-        if (_panelButton.transform.childCount != _objectPrefab.Count)
-        {
+            _temporaryGameObject.SetActive(true);
             foreach (Transform obj in _panelButton.transform)
             {
                 Destroy(obj.gameObject);
             }
             FillPreviewObject();
+            _temporaryGameObject.SetActive(false);
+	}
+
+    void UpdateStatusObject()
+    {
+        angkaCacheSaved = _objectPrefab.Count;
+		_countingCache.text = "Object yang bisa disimpan :\n\n" + angkaCacheSaved + " / 10";
+	}
+
+    public void UpdateObjectPrefab()
+    {
+		var fileNames = Directory.GetFiles(DirectoryrResponse.Instance.Used3DobjectDirectory + "/");
+		foreach (var fileName in fileNames)
+		{
+			//PrefabAsset.Add(fileName);\
+			DataPersistentStringValue.Add(fileName);
 		}
-    }
+
+		angkaCacheSaved = 0;
+        foreach (GameObject obj in _objectPrefab)
+        {
+            Destroy(obj);
+        }
+
+        for(int i = 0; i < DataPersistentStringValue.Count; i++)
+        {
+
+			try
+            {
+				//GameObject tempObject = new OBJLoader().Load(DataPersistentStringValue[i],Application.persistentDataPath+"/Materials/Testing.mat");
+				GameObject tempObject = new OBJLoader().Load(DataPersistentStringValue[i], @"Assets/Material/Testing.mat");
+                tempObject.transform.SetParent(_temporaryGameObject.transform);
+				_objectPrefab.Add(tempObject);
+				Debug.Log("Update Object Prefab");
+			}
+            catch (Exception e) 
+            {
+                Debug.LogError(e);
+                Debug.LogError("Ada Data yang hilang dari Direktori ini : " + DirectoryrResponse.Instance.Used3DobjectDirectory
+                    + "\nTolong Hapus Directory tersebut dan Install ulang Aplikasi ini");
+
+			}
+            angkaCacheSaved++;
+        }
+
+        UpdatePreviewObject();
+        UpdateStatusObject();
+
+	}
 
     void FillPreviewObject()
     {

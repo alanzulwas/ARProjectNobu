@@ -259,6 +259,11 @@ public static class NativeFilePicker
 						editorFilters[i * 2] = "Audio files";
 						editorFilters[i * 2 + 1] = "mp3,aac,flac";
 					}
+					else if (allowedFileTypes[i] == "mesh/*")
+					{
+						editorFilters[i * 2] = "Mesh Object";
+						editorFilters[i * 2 + 1] = "glb,fbx";
+					}
 					else
 					{
 						editorFilters[i * 2] = "All files";
