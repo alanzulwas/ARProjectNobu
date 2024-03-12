@@ -99,6 +99,9 @@ public class ARToTapObject : MonoBehaviour
 
     public void UpdateObjectPrefab()
     {
+        DataPersistentStringValue = null;
+        DataPersistentStringValue = new List<string>();
+
 		var fileNames = Directory.GetFiles(DirectoryrResponse.Instance.Used3DobjectDirectory + "/");
 		foreach (var fileName in fileNames)
 		{
@@ -109,8 +112,14 @@ public class ARToTapObject : MonoBehaviour
 		angkaCacheSaved = 0;
         foreach (GameObject obj in _objectPrefab)
         {
+            Debug.Log("Hapus Object");
             Destroy(obj);
         }
+
+        _objectPrefab = null;
+        _objectPrefab = new List<GameObject>();
+
+
 
         for(int i = 0; i < DataPersistentStringValue.Count; i++)
         {
@@ -145,6 +154,7 @@ public class ARToTapObject : MonoBehaviour
 			GameObject prevButton = Instantiate(_objPrevBtnPrefab, _panelButton.transform).gameObject;
 
 			prevButton.name = _objectPrefab[i].name;
+            prevButton.transform.Find("ObjectName").gameObject.GetComponent<TextMeshProUGUI>().text = _objectPrefab[i].name;
 
 			prevButton.GetComponent<PreviewImagePrefab>().setIndexPrev(i);
 			prevButton.GetComponent<Button>().onClick.RemoveAllListeners();

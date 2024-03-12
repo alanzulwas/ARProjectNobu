@@ -1,0 +1,106 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "E:\\Documents\\ProjectUnity\\ARProjectNobu\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{F7A5A611-BE4E-521D-8239-25C5AB76BA14}|Assembly-CSharp.csproj|e:\\documents\\projectunity\\arprojectnobu\\assets\\exampleassets\\scripts\\natipfilpick.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F7A5A611-BE4E-521D-8239-25C5AB76BA14}|Assembly-CSharp.csproj|solutionrelative:assets\\exampleassets\\scripts\\natipfilpick.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F7A5A611-BE4E-521D-8239-25C5AB76BA14}|Assembly-CSharp.csproj|e:\\documents\\projectunity\\arprojectnobu\\assets\\exampleassets\\scripts\\artotapobject.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F7A5A611-BE4E-521D-8239-25C5AB76BA14}|Assembly-CSharp.csproj|solutionrelative:assets\\exampleassets\\scripts\\artotapobject.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F7A5A611-BE4E-521D-8239-25C5AB76BA14}|Assembly-CSharp.csproj|e:\\documents\\projectunity\\arprojectnobu\\assets\\exampleassets\\scripts\\previewimageprefab.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F7A5A611-BE4E-521D-8239-25C5AB76BA14}|Assembly-CSharp.csproj|solutionrelative:assets\\exampleassets\\scripts\\previewimageprefab.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3657EB9A-00DD-EDA8-ACBD-92998791EC30}|NativeFilePicker.Runtime.csproj|e:\\documents\\projectunity\\arprojectnobu\\assets\\plugins\\nativefilepicker\\nativefilepicker.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3657EB9A-00DD-EDA8-ACBD-92998791EC30}|NativeFilePicker.Runtime.csproj|solutionrelative:assets\\plugins\\nativefilepicker\\nativefilepicker.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 4,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "NativeFilePicker.cs",
+              "DocumentMoniker": "E:\\Documents\\ProjectUnity\\ARProjectNobu\\Assets\\Plugins\\NativeFilePicker\\NativeFilePicker.cs",
+              "RelativeDocumentMoniker": "Assets\\Plugins\\NativeFilePicker\\NativeFilePicker.cs",
+              "ToolTip": "E:\\Documents\\ProjectUnity\\ARProjectNobu\\Assets\\Plugins\\NativeFilePicker\\NativeFilePicker.cs",
+              "RelativeToolTip": "Assets\\Plugins\\NativeFilePicker\\NativeFilePicker.cs",
+              "ViewState": "AQIAAOoAAAAAAAAAAAAtwAgBAAArAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-03-12T03:36:34.424Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "PreviewImagePrefab.cs",
+              "DocumentMoniker": "E:\\Documents\\ProjectUnity\\ARProjectNobu\\Assets\\ExampleAssets\\Scripts\\PreviewImagePrefab.cs",
+              "RelativeDocumentMoniker": "Assets\\ExampleAssets\\Scripts\\PreviewImagePrefab.cs",
+              "ToolTip": "E:\\Documents\\ProjectUnity\\ARProjectNobu\\Assets\\ExampleAssets\\Scripts\\PreviewImagePrefab.cs",
+              "RelativeToolTip": "Assets\\ExampleAssets\\Scripts\\PreviewImagePrefab.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAB8AAAA0AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-03-12T03:24:54.632Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Natipfilpick.cs",
+              "DocumentMoniker": "E:\\Documents\\ProjectUnity\\ARProjectNobu\\Assets\\ExampleAssets\\Scripts\\Natipfilpick.cs",
+              "RelativeDocumentMoniker": "Assets\\ExampleAssets\\Scripts\\Natipfilpick.cs",
+              "ToolTip": "E:\\Documents\\ProjectUnity\\ARProjectNobu\\Assets\\ExampleAssets\\Scripts\\Natipfilpick.cs",
+              "RelativeToolTip": "Assets\\ExampleAssets\\Scripts\\Natipfilpick.cs",
+              "ViewState": "AQIAAB8AAAAAAAAAAAAAADEAAAAaAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-03-12T03:17:59.697Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "ARToTapObject.cs",
+              "DocumentMoniker": "E:\\Documents\\ProjectUnity\\ARProjectNobu\\Assets\\ExampleAssets\\Scripts\\ARToTapObject.cs",
+              "RelativeDocumentMoniker": "Assets\\ExampleAssets\\Scripts\\ARToTapObject.cs",
+              "ToolTip": "E:\\Documents\\ProjectUnity\\ARProjectNobu\\Assets\\ExampleAssets\\Scripts\\ARToTapObject.cs",
+              "RelativeToolTip": "Assets\\ExampleAssets\\Scripts\\ARToTapObject.cs",
+              "ViewState": "AQIAAFEAAAAAAAAAAAAYwGUAAAApAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-03-12T02:41:59.761Z",
+              "EditorCaption": ""
+            }
+          ]
+        },
+        {
+          "DockedWidth": 209,
+          "SelectedChildIndex": -1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

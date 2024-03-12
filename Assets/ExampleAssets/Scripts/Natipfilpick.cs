@@ -25,28 +25,29 @@ public class Natipfilpick : MonoBehaviour
 	public void LoadFile()
 	{
 		string[] allowedFileTypes;
-		if (Application.platform == RuntimePlatform.Android)
-			allowedFileTypes = new string[] { "*/*" };
-		else
-			allowedFileTypes = new string[] { "public.item", "public.content" };
-
+		//allowedFileTypes = new string[] { "*/*" };
+		allowedFileTypes = new string[] { "glb" };
+		allowedFileTypes = new string[] { "fbx" };
+		allowedFileTypes = new string[] { "obj" };
+		Debug.Log(allowedFileTypes);
 		NativeFilePicker.Permission permission = NativeFilePicker.PickFile((path) =>
 		{
 			if (path == null) Debug.Log("Operation cancelled");
 			else
 			{
-				//ARToTapObject.Instance._objectPrefab.Add(loadedObject);
+				ARToTapObject.Instance._objectPrefab.Add(loadedObject);
 				try
 				{
-					//FinalPath = path;
+					FinalPath = path;
 
-					//string filePath = FinalPath;
+					string filePath = FinalPath;
 					//string mtlPath = @"Assets/Material/Testing.mat";
 
-					//if (loadedObject != null)
-					//	Destroy(loadedObject);
+					if (loadedObject != null)
+						Destroy(loadedObject);
+					loadedObject = new OBJLoader().Load(filePath);
 					//loadedObject = new OBJLoader().Load(filePath, mtlPath);
-					//error = string.Empty;
+					error = string.Empty;
 					//if (loadedObject != null)
 					//{
 
@@ -60,7 +61,7 @@ public class Natipfilpick : MonoBehaviour
 					//StartCoroutine(LoadYourAsyncScene());
 					Debug.Log("Error Something");
 					Debug.LogError("\n "+e);
-					SaveTheImport("Default-" + UnityEngine.Random.Range(0, 10) + "-Object", FinalPath);
+					//SaveTheImport("Default-" + UnityEngine.Random.Range(0, 10) + "-Object", FinalPath);
 				}
 
 				StatusObjectCountText.SetActive(false);
@@ -68,9 +69,9 @@ public class Natipfilpick : MonoBehaviour
 
 				LoadingPanelText.text = "Loading Import 3d";
 
+				Destroy(loadedObject);
 				StartCoroutine(LoadingImport3D());
 
-				Destroy(loadedObject);
 				Debug.Log("Picked file: " + FinalPath);
 			}
 		}, allowedFileTypes);
