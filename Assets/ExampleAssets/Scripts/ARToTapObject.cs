@@ -9,7 +9,6 @@ using TMPro;
 using UnityEditor;
 using IngameDebugConsole;
 using System.IO;
-using Dummiesman;
 
 public class ARToTapObject : MonoBehaviour
 {
@@ -31,7 +30,14 @@ public class ARToTapObject : MonoBehaviour
     [SerializeField] private GameObject _objAddBtnPrefab;
     public ARRaycastManager arOrigin;
 
-    public Natipfilpick _importerLoader;
+	[Header("AssetBundle")]
+	string assetBundleLink = "";
+
+	bool clearCache = false;
+	private GameObject placementARObject = null;
+	private AssetBundle assetBundle = null;
+
+	public Natipfilpick _importerLoader;
     private Pose placementPose;
     private bool placementPoseIsValid;
     private int objectNumber = 0;
@@ -56,9 +62,10 @@ public class ARToTapObject : MonoBehaviour
         _importerLoader.StatusObjectCountText.SetActive(true);
         _importerLoader.LoadingScreen.SetActive(false);
 
-        Debug.Log(Application.dataPath);
+		//      Debug.Log(Application.dataPath);
 		Debug.Log(Application.persistentDataPath);
-		Debug.Log(Application.temporaryCachePath);
+		//Debug.Log(Application.temporaryCachePath);
+		//Debug.Log(Application.streamingAssetsPath);
 
 
         UpdateObjectPrefab();
@@ -102,7 +109,10 @@ public class ARToTapObject : MonoBehaviour
         DataPersistentStringValue = null;
         DataPersistentStringValue = new List<string>();
 
-		var fileNames = Directory.GetFiles(DirectoryrResponse.Instance.Used3DobjectDirectory + "/");
+        string persistent = Application.persistentDataPath;
+        //string persistent = "asdkajshd";
+
+        var fileNames = Directory.GetFiles(persistent + "/Object3Dimport" + "/");
 		foreach (var fileName in fileNames)
 		{
 			//PrefabAsset.Add(fileName);\
@@ -127,16 +137,15 @@ public class ARToTapObject : MonoBehaviour
 			try
             {
 				//GameObject tempObject = new OBJLoader().Load(DataPersistentStringValue[i],Application.persistentDataPath+"/Materials/Testing.mat");
-				GameObject tempObject = new OBJLoader().Load(DataPersistentStringValue[i], @"Assets/Material/Testing.mat");
-                tempObject.transform.SetParent(_temporaryGameObject.transform);
-				_objectPrefab.Add(tempObject);
+				//GameObject tempObject = new OBJLoader().Load(DataPersistentStringValue[i], @"Assets/Material/Testing.mat");
+				InitiateLoadModel();
 				Debug.Log("Update Object Prefab");
 			}
             catch (Exception e) 
             {
                 Debug.LogError(e);
-                Debug.LogError("Ada Data yang hilang dari Direktori ini : " + DirectoryrResponse.Instance.Used3DobjectDirectory
-                    + "\nTolong Hapus Directory tersebut dan Install ulang Aplikasi ini");
+                Debug.LogError("Ada Data yang hilang dari Direktori ini : " + persistent + "/Object3Dimport"
+					+ "\nTolong Hapus Directory tersebut dan Install ulang Aplikasi ini");
 
 			}
             angkaCacheSaved++;
@@ -197,6 +206,58 @@ public class ARToTapObject : MonoBehaviour
         }
     }
 
+	private void InitiateLoadModel()
+	{
+		Caching.compressionEnabled = false;
+
+		if (clearCache)
+		{
+			Caching.ClearCache();
+		}
+		StartCoroutine(DownloadAndLoad());
+	}
+
+	private IEnumerator DownloadAndLoad()
+	{
+		while (!Caching.ready)
+		{
+			yield return null;
+		}
+		//yield return GetBundle();
+
+		var assetBundler = AssetBundle.LoadFromFile(Path.Combine(Application.streamingAssetsPath, "Android/bigplane"));
+
+		if (!assetBundler)
+		{
+			Debug.Log("Bundle Failed to Load");
+			yield break;
+		}
+
+		Debug.Log(assetBundler);
+		GameObject tempObject = assetBundler.LoadAsset<GameObject>("bigplane");
+		tempObject.transform.SetParent(_temporaryGameObject.transform);
+		_objectPrefab.Add(tempObject);
+	}
+
+	private IEnumerator GetBundle()
+	{
+		WWW request = WWW.LoadFromCacheOrDownload("https://drive.google.com/file/d/1myaNjw_d8osiJOhjCjWRPnn1Uj_aeDJY/view?usp=sharing", 0);
+		while (!request.isDone)
+		{
+			yield return null;
+		}
+		if (request.error == null)
+		{
+			//Debug.Log();
+			assetBundle = request.assetBundle;
+			Debug.Log("Success");
+		}
+		else
+		{
+			Debug.Log("Error" + request.error);
+		}
+	}
+
 	#region ARFoundation
 	private void UpdatePlacementIndicator()
 	{
@@ -241,7 +302,5 @@ public class ARToTapObject : MonoBehaviour
             }
             return _instance;
         }
-    }
-
-
+    }	
 }

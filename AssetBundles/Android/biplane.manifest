@@ -1,0 +1,46 @@
+ManifestFileVersion: 0
+CRC: 3226923432
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 3f7bae4cb709e3fad7ad1a0b6149c4d3
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: f90518dec22c5e087c7639ef5685e7fd
+  IncrementalBuildHash:
+    serializedVersion: 2
+    Hash: 3f7bae4cb709e3fad7ad1a0b6149c4d3
+HashAppended: 0
+ClassTypes:
+- Class: 1
+  Script: {instanceID: 0}
+- Class: 4
+  Script: {instanceID: 0}
+- Class: 21
+  Script: {instanceID: 0}
+- Class: 23
+  Script: {instanceID: 0}
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 33
+  Script: {instanceID: 0}
+- Class: 43
+  Script: {instanceID: 0}
+- Class: 48
+  Script: {instanceID: 0}
+- Class: 114
+  Script: {fileID: 11500000, guid: 52d72cc6210cb7144a24acb7402222a6, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 7c73c1ab94e28d244827af556dca1ed2, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 4eda371e5375f454490a86f21559ee38, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: d50da683d91fd894086d6be9918eddc3, type: 3}
+- Class: 115
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers:
+- AssemblyName: LeanTouch
+  ClassName: Lean.Touch.LeanFingerFilter
+Assets:
+- Assets/ExampleAssets/Prefabs/biplane.prefab
+Dependencies: []

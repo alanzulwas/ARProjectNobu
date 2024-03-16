@@ -25,10 +25,10 @@ public class Natipfilpick : MonoBehaviour
 	public void LoadFile()
 	{
 		string[] allowedFileTypes;
-		//allowedFileTypes = new string[] { "*/*" };
-		allowedFileTypes = new string[] { "glb" };
-		allowedFileTypes = new string[] { "fbx" };
-		allowedFileTypes = new string[] { "obj" };
+		allowedFileTypes = new string[] { "*/*" };
+		//allowedFileTypes = new string[] { "glb", "fbx", "obj" };
+		//allowedFileTypes = new string[] { "fbx" };
+		//allowedFileTypes = new string[] { "obj" };
 		Debug.Log(allowedFileTypes);
 		NativeFilePicker.Permission permission = NativeFilePicker.PickFile((path) =>
 		{
@@ -40,12 +40,12 @@ public class Natipfilpick : MonoBehaviour
 				{
 					FinalPath = path;
 
-					string filePath = FinalPath;
+					//string filePath = FinalPath;
 					//string mtlPath = @"Assets/Material/Testing.mat";
 
-					if (loadedObject != null)
-						Destroy(loadedObject);
-					loadedObject = new OBJLoader().Load(filePath);
+					//if (loadedObject != null)
+					//	Destroy(loadedObject);
+					//loadedObject = new OBJLoader().Load(filePath);
 					//loadedObject = new OBJLoader().Load(filePath, mtlPath);
 					error = string.Empty;
 					//if (loadedObject != null)
@@ -54,7 +54,7 @@ public class Natipfilpick : MonoBehaviour
 					//	if (ObjectPlace.gameObject.active) loadedObject.transform.position = ObjectPlace.position;
 					//	else if (ObjectHoldPlace.gameObject.active) loadedObject.transform.position = ObjectHoldPlace.position;
 					//}
-					SaveTheImport(loadedObject.name, FinalPath);
+					SaveTheImport(FinalPath);
 				}
 				catch(Exception e)
 				{
@@ -77,21 +77,23 @@ public class Natipfilpick : MonoBehaviour
 		}, allowedFileTypes);
 	}
 
-	private void SaveTheImport(string objectImportedname, string SourcePath)
+	private void SaveTheImport(string SourcePath)
 	{
 		// Create folder Prefabs and set the path as within the Prefabs folder,
 		// and name it as the GameObject's name with the .Prefab format
-		string fileExtension = Path.GetExtension(SourcePath);
+		//string fileExtension = Path.GetExtension(SourcePath);
+		string fileName = Path.GetFileName(SourcePath);
+		string persistent = Application.persistentDataPath;
 
 		//if (!Directory.Exists("Assets/Resources/PrefabsForSaveAssets"))
 		//	AssetDatabase.CreateFolder("Assets", "Resources/PrefabsForSaveAssets");
 		//FileUtil.CopyFileOrDirectory(SourcePath, "Assets/Resources/PrefabsForSaveAssets/" + objectImported+fileExtension);
-		if (!Directory.Exists(Application.persistentDataPath + "/Object3Dimport"))
+		if (!Directory.Exists(persistent + "/Object3Dimport"))
 		{
-			Directory.CreateDirectory(Application.persistentDataPath + "/Object3Dimport");
+			Directory.CreateDirectory(persistent + "/Object3Dimport");
 			//CreateFolder(Application.persistentDataPath, "Materials");
 		}
-		File.Copy(SourcePath, DirectoryrResponse.Instance.Used3DobjectDirectory+"/"+objectImportedname+fileExtension);
+		File.Copy(SourcePath, persistent + "/Object3Dimport" + "/" + fileName);
 
 		//ARToTapObject.Instance.PrefabAsset = Resources.LoadAll<GameObject>("PrefabsForSaveAssets");
 		//ARToTapObject.Instance.angkaCacheSaved = ARToTapObject.Instance.PrefabAsset.Length;
