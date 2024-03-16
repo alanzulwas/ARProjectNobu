@@ -19,10 +19,5 @@
 
 # Unity3D Generated File On Crash Reports
 sysinfo.txt
-.vs/ARProjectNobu/FileContentIndex/20802122-047b-4cb7-8926-77e93a9c77c9.vsidx
-.vs/ARProjectNobu/FileContentIndex/b6c86747-8333-4a0c-ab1b-710935dbd0eb.vsidx
-.vs/ARProjectNobu/FileContentIndex/c806be64-0dbb-4db8-b61d-5b920c83ca74.vsidx
-.vs/ARProjectNobu/FileContentIndex/cb0de252-6a15-46d4-a707-cb5d4a6f17b4.vsidx
-.vs/ARProjectNobu/FileContentIndex/ec12339b-c1bf-49ca-81e4-d03a0d6c9a02.vsidx
-.vs/ARProjectNobu/FileContentIndex/2529f5b2-c47f-4f02-8dc8-98607bc4187f.vsidx
-.vs/ARProjectNobu/FileContentIndex/031a1f93-8297-4c66-9ec2-b8ae1d532f12.vsidx
+.vs/
+Logs/
