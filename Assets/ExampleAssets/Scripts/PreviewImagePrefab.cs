@@ -28,11 +28,11 @@ public class PreviewImagePrefab : MonoBehaviour
 	{
 		ARToTapObject placem = ARToTapObject.Instance;
 		placem.ClearObjectPreview();
-		placem.ObjectNumber = indexPrevButton;
+		//placem.ObjectNumber = indexPrevButton;
 		Debug.Log("Set preview index " + indexPrevButton);
-		GameObject loadObject = Instantiate(placem._objectPrefab[indexPrevButton]).gameObject;
-		loadObject.transform.position = new Vector3(0f,0f,2f);
-		loadObject.transform.SetParent(placem.PreviewTf);
+		GameObject loadObject = Instantiate(placem._objectPrefab[indexPrevButton], placem.PreviewTf.transform.position , Quaternion.Euler(0f,0f,0f), placem.PreviewTf).gameObject;
+		//loadObject.transform.position = new Vector3(0f,0f,0f);
+		//loadObject.transform.SetParent(placem.PreviewTf);
 		placem._previewedObject = loadObject;
 	}
 }

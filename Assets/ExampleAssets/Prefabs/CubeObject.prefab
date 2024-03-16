@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 6485269435110501239}
   - component: {fileID: 9071579479618707389}
   - component: {fileID: -6879019460701351491}
-  - component: {fileID: -1191497006508238664}
   - component: {fileID: 2013589930314961253}
   - component: {fileID: 6309195185915470368}
   m_Layer: 0
@@ -101,29 +100,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   img: {fileID: 0}
   indexPrevButton: 0
---- !u!114 &-1191497006508238664
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7414126791596113512}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4eda371e5375f454490a86f21559ee38, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Use:
-    Filter: 0
-    IgnoreStartedOverGui: 1
-    RequiredFingerCount: 0
-    RequiredMouseButtons: 0
-    RequiredSelectable: {fileID: 0}
-  _camera: {fileID: 0}
-  sensitivity: 1
-  damping: -1
-  inertia: 0
-  remainingTranslation: {x: 0, y: 0, z: 0}
 --- !u!114 &2013589930314961253
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -160,7 +136,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Use:
-    Filter: 0
+    Filter: 1
     IgnoreStartedOverGui: 1
     RequiredFingerCount: 0
     RequiredMouseButtons: 0
